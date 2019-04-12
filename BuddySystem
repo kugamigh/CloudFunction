@@ -1,0 +1,50 @@
+int led = D2;
+int boardLed = D7;
+void myHandler(const char *event, const char *data);
+
+void setup() {
+    pinMode(led, OUTPUT);
+    pinMode(boardLed, OUTPUT);
+    
+    Particle.subscribe("Deakin_RIOT_SIT210_Photon_Buddy", myHandler);
+}
+
+void loop() {
+}
+
+void myHandler(const char *event, const char *data)
+{
+    if (strcmp(data,"wave")==0) {
+        // if we receive a wave, turn board LED on for 1 second, 3 times
+        digitalWrite(boardLed, HIGH);
+        delay(1000);
+        digitalWrite(boardLed, LOW);
+        delay(1000);
+        digitalWrite(boardLed, HIGH);
+        delay(1000);
+        digitalWrite(boardLed, LOW);
+        delay(1000);
+        digitalWrite(boardLed, HIGH);
+        delay(1000);
+        digitalWrite(boardLed, LOW);
+        delay(1000);
+    }
+    else if (strcmp(data,"pat")==0) {
+        // if we receive a pat, turn LED on for 1 second
+        digitalWrite(led, HIGH);
+        delay(1000);
+        digitalWrite(led, LOW);
+        delay(1000);
+    }
+    else {
+        // if the data is something else, don't do anything.
+        // Really the data shouldn't be anything but those two listed above.
+        
+        digitalWrite(boardLed, HIGH);
+        digitalWrite(led, HIGH);
+        delay(1000);
+        digitalWrite(led, LOW);
+        digitalWrite(boardLed, LOW);
+        delay(1000);
+    }
+}
